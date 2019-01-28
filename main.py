@@ -1,6 +1,5 @@
 import init
 import game
-import copy
 
 # Begins by initialising the players and the deck depending on the number of players
 print()  # Empty prints are used for nicer display on the command line
@@ -20,7 +19,7 @@ while gameIsOn:
     game.complete_game(Players, Dealer, deck)  # Start the game
 
     # Uses a deep copy of Players because the length of Players might change during the loop
-    copyPlayers = copy.copy(Players)
+    copyPlayers = Players[:]
 
     for player in copyPlayers:
 
@@ -35,3 +34,9 @@ while gameIsOn:
 
     if len(Players) == 0:  # If all the players stopped participating, the game finishes
         gameIsOn = False
+
+    # Reset the deck if it's less than half it's original size.
+    # harder to count cards efficiently
+    if len(deck) < 26 * numberOfPlayers:
+
+        deck = init.create_deck(numberOfPlayers)

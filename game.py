@@ -3,9 +3,7 @@ import time  # Module used to 'pause' the program, so the players have time to r
 
 def dealer(player):  # function to determine if the dealer hit or stand
     score(player)
-    if max(player.score) >= 17:
-        return False
-    return True
+    return max(player.score) < 17
 
 
 def score(player):  # Calculates the score of the player
@@ -13,16 +11,16 @@ def score(player):  # Calculates the score of the player
     player.score = [0, 0]
     number_of_aces = 0  # Count the number of aces
 
-    for _ in range(len(player.cards)):
+    for card in range(len(player.cards)):
 
-        card = player.cards[_][0]  # Takes the first character of each of the player's cards
+        value = player.cards[card][0]  # Takes the first character of each of the player's cards
 
-        if card.isdigit():  # Check if the card is 2-9
+        if value.isdigit():  # Check if the card is 2-9
 
             # Adds the value of the card to each entry in the list
-            player.score = [x + int(card) for x in player.score]
+            player.score = [x + int(value) for x in player.score]
 
-        elif card != 'A':  # Check if the card is an ace
+        elif value != 'A':  # Check if the card is an ace
 
             # Adds 10 to each entry in the list
             player.score = [x + 10 for x in player.score]
@@ -47,12 +45,12 @@ def score(player):  # Calculates the score of the player
 
 def draw_card(deck, player):
 
-        player.cards.append(deck.pop())  # Draw the first card of the deck and deletes it from the list
+        player.cards.append(deck.pop(0))  # Draw the first card of the deck and deletes it from the list
 
 
 def choose_bets(player):
 
-    while 2 > player.bet or player.bet > player.money:  # The player can only bet between 2$ and his money
+    while 2 > player.bet > player.money:  # The player can only bet between 2$ and his money
 
         player.bet = int(input('{}, enter your bet, you have {}$: '.format(player.name, player.money)))
 
@@ -66,9 +64,7 @@ def hit_or_stand():  # Let the player choose if they hit or stand
     while choice != 'Hit' and choice != 'Stand':
         choice = input('Hit or Stand ? ')
 
-    if choice == 'Hit':
-        return True
-    return False
+    return choice == 'Hit'
 
 
 def display_cards(player):  # Used to display all the cards of the players in the same format
@@ -113,6 +109,7 @@ def first_turn(Players, Dealer, deck):  # First turn of the game
 
 
 def insurance(Players, Dealer):
+
     if not Dealer.cards[0][0].isdigit():  # Check if it's a case where the player can take insurance
 
         for player in Players:
