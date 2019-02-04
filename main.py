@@ -32,8 +32,7 @@ while gameIsOn:
 
             Players.remove(player)
 
-    if len(Players) == 0:  # If all the players stopped participating, the game finishes
-        gameIsOn = False
+    gameIsOn = len(Players) != 0  # If all the players stopped participating, the game finishes
 
     # Reset the deck if it's less than half it's original size.
     # harder to count cards efficiently

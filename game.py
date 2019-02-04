@@ -50,18 +50,17 @@ def draw_card(deck, player):
 
 def choose_bets(player):
 
-    while 2 > player.bet > player.money:  # The player can only bet between 2$ and his money
+    while player.bet not in range(2, player.money + 1):  # The player can only bet between 2$ and his money
 
         player.bet = int(input('{}, enter your bet, you have {}$: '.format(player.name, player.money)))
 
     player.money -= player.bet  # Subtract the bet to the player's money
 
 
-def hit_or_stand():  # Let the player choose if they hit or stand
+def hit_or_stand(choice=''):  # Let the player choose if they hit or stand
 
-    choice = ''
+    while choice not in ['Hit', 'Stand']:
 
-    while choice != 'Hit' and choice != 'Stand':
         choice = input('Hit or Stand ? ')
 
     return choice == 'Hit'
